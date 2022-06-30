@@ -1,0 +1,24 @@
+void epic() {
+  for (int j = 0;  j < 22; j++) {
+    display.clearDisplay();
+    display.drawBitmap((2 * j) - 42, 21 - j,  lefthand, 42, 32, BLACK);
+    display.drawBitmap(84 - 2 * j, 21 - j,  righthand, 42, 32, BLACK);
+    display.display();
+    delay(20);
+  }
+
+  for (int i = 0; i < 83; i++) {
+    display.drawBitmap(0, 0,  lefthand, 42, 32, BLACK);
+    display.drawBitmap(42, 0,  righthand, 42, 32, BLACK);
+    display.setCursor(i - 82, 32);
+    display.print("EPIC ENGINEERS");
+    display.setCursor(84 - i, 40);
+    display.print("  (Pvt) Ltd.  ");
+    display.display();
+    delay(10);
+    display.clearDisplay();
+  }
+
+  delay(3000);
+  display.clearDisplay();
+}

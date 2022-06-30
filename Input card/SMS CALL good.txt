@@ -1,0 +1,440 @@
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(8,9);
+#include <LiquidCrystal.h>
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+#include<EEPROM.h>
+int myNum[9];            //this should be 9
+char myword[15];
+int v1;
+char v2;
+char letter;
+//......................................................................
+byte s1[8] = 
+{ B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000};
+   
+byte s2[8] = { B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000
+};
+                
+ byte s3[8] = { B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100
+                 };                 
+byte s4[8] = { B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110
+                 }; 
+byte s5[8]={
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+                 
+//............................................................................................................................
+void setup() {
+    lcd.createChar(1,s1);
+    lcd.createChar(2, s2);
+    lcd.createChar(3,s3);
+    lcd.createChar(4, s4);
+    lcd.createChar(5,s5);  
+    lcd.begin(16, 2);
+    Serial.begin(115200);
+    mySerial.begin(115200);
+ // epic();                                        //enable later
+   entersetting();
+   loading();
+   readsetting();
+   lcd.clear();
+
+}
+//.............................................................................................................................
+void loop() {
+  lcd.setCursor(0,0);
+  lcd.print("NO READINGS");
+
+  if(analogRead(A2)>900){
+    
+    delay(250);
+    sendsms1();
+    //call();
+  }
+ 
+}
+//........................................................................
+void epic(){
+  for(int x=14;x>=1;x--)
+    {  
+      lcd.setCursor(x, 0);  
+       lcd.print("   WELCOME ");   
+    lcd.setCursor(x, 1);  
+       lcd.print("EPIC ENGINEERS  ");  
+ delay (100);
+    if (x==1)
+    {
+      delay(2000);
+      }
+    }
+}
+//.................................................
+void loading(){
+  int d=500/(16*5);
+    for( int x =0; x<17;x++){
+      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(1);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(2);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(3);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(4);     
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(5);
+      
+    }
+}
+//..............................................................................................................................................
+void entersetting(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Press Red Button ");
+  lcd.setCursor(0,1);
+  lcd.print("to Enter Setting");
+  for(int i=0;i<500;i++){
+    delay(10);
+    if(analogRead(A3)>900){
+      lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Button Pressed");
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(" 1 - Edit number");
+  lcd.setCursor(0,1);
+  lcd.print(" 2 - Edit message");
+  for(int i=0;i<700;i++){
+    delay(10);
+    if(analogRead(A3)>900){ savenumber(); break;}
+  if(analogRead(A2)>900){saveletter(); break;}
+ 
+  }
+  break;
+   }
+
+  } 
+}
+//............................................
+int savenumber(){              // USE FOR INSTALL NEW SETTING
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Rotate wheel & ");
+  lcd.setCursor(3,1);
+  lcd.print("Press Enter");
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("+94");
+  for( int i=0;i<9;){
+    int v2=readpreset();
+     myNum[i] = v2;
+     EEPROM.write(i,v2);
+     delay(20);
+     lcd.setCursor(i+3,0);
+     lcd.print(v2);
+    delay(100);
+   i=i+1;
+    Serial.println("number entered");
+  }
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Number is = ");
+  lcd.setCursor(0,1);
+  lcd.print("+94");
+  for(int i = 0; i<9;)
+  {
+    lcd.setCursor(i+3,1);
+    lcd.print(myNum[i]);
+    delay(10);
+    i=i+1;
+  }
+ delay(5*1000);
+}
+//....................................
+int readpreset(){
+  
+  do { v1 = map(analogRead(A0),0,1023,0,9);
+  lcd.setCursor(15,1);
+  lcd.println(v1);
+  delay(100);
+  
+  }while (analogRead(A3)<1000);
+  //Serial.print("Value Taken");
+  delay(500);
+ return v1; 
+}
+//.........................................................................................................
+void saveletter()  // USE FOR INSTALL NEW Sentences
+{            
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Rotate wheel & ");
+  lcd.setCursor(3,1);
+  lcd.print("Enter word");
+  delay(2000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+   for( int i=0;i<16;){
+    lcd.setCursor(i,0);
+    lcd.print("_");
+    v2=englishletter1();
+     myword[i] = v2;
+     EEPROM.write(i+10,v2);
+     delay(20);
+     lcd.setCursor(i,0);
+     lcd.print(v2);
+    delay(100);
+   i=i+1;
+    //Serial.println("number entered");
+  }
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Sentences is ");
+  lcd.setCursor(0,1);
+  for(int i = 0; i<16;)
+  {
+    lcd.setCursor(i,1);
+    lcd.print(myword[i]);
+    delay(10);
+    i=i+1;
+  }
+ delay(5*1000);
+}
+//....................................................................
+int englishletter1(){
+ 
+  do{
+    v2 =map(analogRead(A0),0,1023,1,9);
+  switch (v2){
+    case 1: lcd.setCursor(10,1);  lcd.print("a b c"); break;
+    case 2:  lcd.setCursor(10,1); lcd.print("d e f"); break;
+    case 3:  lcd.setCursor(10,1);lcd.print("g h i");break;
+    case 4:  lcd.setCursor(10,1); lcd.print("j k l");break;
+    case 5:  lcd.setCursor(10,1);lcd.print("m n o");break;
+    case 6:  lcd.setCursor(10,1); lcd.print("p q r");break;
+    case 7:   lcd.setCursor(10,1);lcd.print("s t u");break;
+    case 8:  lcd.setCursor(10,1); lcd.print("v w x");break;
+    case 9:  lcd.setCursor(10,1); lcd.print("y z _ ");break;}
+    delay(100);
+
+    }while((analogRead(A3)<900)&&(analogRead(A2)<900)&&(analogRead(A1)<900));
+if(analogRead(A3)>900){
+   switch(v2){
+  case 1: letter='a'; break;
+  case 2: letter='d'; break;
+  case 3: letter='g'; break;
+  case 4: letter='j'; break;
+  case 5: letter='m'; break;
+  case 6: letter='p'; break;
+  case 7: letter='s'; break;
+  case 8: letter='v'; break;
+  case 9: letter='y'; break; }
+  }
+if(analogRead(A2)>900){
+   switch(v2){
+  case 1: letter='b'; break;
+  case 2: letter='e'; break;
+  case 3: letter='h'; break;
+  case 4: letter='k'; break;
+  case 5: letter='n'; break;
+  case 6: letter='q'; break;
+  case 7: letter='t'; break;
+  case 8: letter='w'; break;
+  case 9: letter='z'; break; }
+  }
+if(analogRead(A1)>900){
+   switch(v2){
+  case 1: letter='c'; break;
+  case 2: letter='f'; break;
+  case 3: letter='i'; break;
+  case 4: letter='l'; break;
+  case 5: letter='o'; break;
+  case 6: letter='r'; break;
+  case 7: letter='u'; break;
+  case 8: letter='x'; break;
+  case 9: letter=' '; break; }
+  } 
+ Serial.println(letter);
+  delay(100);
+  return letter ;   
+}
+//................................................................................................................................................
+void readsetting(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Press Red Button ");
+  lcd.setCursor(0,1);
+  lcd.print("to Read Setting");
+  for(int i=0;i<500;i++){
+    
+  
+    delay(10);
+    if(analogRead(A3)>900){
+      lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Button Pressed");
+  delay(1500);
+ lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(" 1 - Read number");
+  lcd.setCursor(0,1);
+  lcd.print(" 2 - Read message");
+  for(int i=0;i<700;i++){
+    delay(10);
+    if(analogRead(A3)>900){ readnumber(); break;}
+  if(analogRead(A2)>900){readmessage(); break;}
+   }
+break;
+  } 
+  }
+}
+
+//.........................................................................................
+void readnumber(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Number is");
+  lcd.setCursor(0,1);
+  lcd.print("+94");
+  for(int i = 0; i<9;)
+  {
+    lcd.setCursor(i+3,1);
+    lcd.print(EEPROM.read(i));
+    delay(10);
+    i=i+1;
+  }
+ delay(5000); 
+}
+//..................................................
+void readmessage(){
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Message is ");
+  lcd.setCursor(0,1);
+   for(int i = 0; i<16;)
+  {
+    lcd.setCursor(i,1);
+    Serial.print(v2);
+    v2 = EEPROM.read(i+10);
+    delay(20);
+    Serial.print(v2);
+
+    lcd.print(v2);
+    delay(10);
+    i=i+1;
+    
+  }
+  delay(5000);
+}
+//................................................................................................................................................
+void call(){
+  lcd.clear();
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Calling . . .");
+  lcd.setCursor(0,1);
+  lcd.print("+94");
+  for(int i = 0; i<9;)
+  {
+    lcd.setCursor(i+3,1);
+    lcd.print(EEPROM.read(i));
+    delay(10);
+    i=i+1;
+  }
+  mySerial.print("ATD+94");
+  for(int i =0;i<9;){
+    mySerial.print(EEPROM.read(i));
+    i=i+1;
+  }
+  mySerial.println(";\r");
+  delay(15*1000);
+  lcd.clear();
+}
+//............................................................
+void sendsms1()
+{ 
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Sending sms . .");
+  lcd.setCursor(0,1);
+  lcd.print("+94");
+  for(int i = 0; i<9;)
+  {
+    lcd.setCursor(i+3,1);
+    lcd.print(EEPROM.read(i));
+    delay(10);
+    i=i+1;
+  }
+
+  mySerial.println("AT+CMGF=1"); // Configuring TEXT mode
+  
+  delay(50);
+  
+mySerial.print("AT+CMGS=\"+94");
+  for(int i =0;i<9;){
+    mySerial.print(EEPROM.read(i));
+    i=i+1;
+  }
+  mySerial.println("\"");
+  delay(50);
+ 
+    delay(50);
+for(int i = 0; i<16;)
+  {
+  
+    v2 = EEPROM.read(i+10);
+    delay(20);
+  mySerial.print(v2);
+    i=i+1;
+  }
+mySerial.println(".");
+delay(50);
+
+  mySerial.write(26);
+ delay(15*1000);
+ lcd.clear();
+}
+//.............................................................................................................................

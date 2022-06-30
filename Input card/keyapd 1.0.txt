@@ -1,0 +1,37 @@
+#define b12 6 //down
+#define b11 13 //up
+#define b10 20 //enter
+#define b0 91
+#define b1 40
+#define b2 34
+#define b3 27
+#define b4 47
+#define b5 54
+#define b6 61
+#define b7 83
+#define b8 76
+#define b9 68
+
+void setup() {
+  
+  Serial.begin(9600);
+}
+
+
+void loop() {
+ output(); 
+  
+}
+int output()
+{
+  int value1 = analogRead(A0);
+  value1 =  map(value1,0,1023,0,100);
+  
+  Serial.println(value1);
+  delay(100);    
+  if((value1==b12)||(value1==b11)||(value1==b10)||(value1==b0)||(value1==b1)||(value1==b2)||(value1==b3)||(value1==b4)||(value1==b5)||(value1==b6)||(value1==b7)||(value1==b8)||(value1==b9)){
+  Serial.println("value reached");
+  //delay(1000);
+  }
+}
+

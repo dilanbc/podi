@@ -1,0 +1,28 @@
+void setup()
+{
+    Serial.begin(9600);
+}
+ 
+void loop()
+{
+   
+    int r1 = analogRead(A0);
+    r1 =  map(r1,0,1023,0,100);
+     {
+        switch (r1) {
+        case 91: Serial.println("0"); break;
+        case 40: Serial.println("1"); break;
+        case 34: Serial.println("2"); break;
+        case 27: Serial.println("3"); break;
+        case 47: Serial.println("4"); break;
+        case 54: Serial.println("5"); break;
+        case 61 : Serial.println("6"); break;
+        case 83: Serial.println("7"); break;
+        case 76: Serial.println("8"); break;
+        case 68 : Serial.println("9"); break;
+        case 6: Serial.println("D"); break;
+        case 13 : Serial.println("U"); break;
+        case 20 : Serial.println("E"); break;
+        }
+    }
+}

@@ -1,0 +1,104 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+byte s1[8] = 
+{ B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000,
+  B10000};
+   
+byte s2[8] = { B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000
+};
+                
+ byte s3[8] = { B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100,
+  B11100
+                 };                 
+byte s4[8] = { B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110,
+  B11110
+                 }; 
+byte s5[8]={
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+                 
+
+                 
+void setup() { 
+    lcd.createChar(1,s1);
+    lcd.createChar(2, s2);
+    lcd.createChar(3,s3);
+    lcd.createChar(4, s4);
+    lcd.createChar(5,s5);
+    lcd.begin(16, 2); 
+    loading();
+} 
+void loop() {
+    
+}
+
+void loading(){
+  int d=5000/(16*5);
+    for( int x =0; x<17;x++){
+      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(1);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(2);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(3);      
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(4);     
+      lcd.setCursor(x,1);
+      delay(d);
+      lcd.write(5);
+      
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

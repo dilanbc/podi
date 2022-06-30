@@ -1,0 +1,719 @@
+
+rfid test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000005b4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000540  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000030  00800100  00800100  000005b4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000005b4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000005e4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000e8  00000000  00000000  00000624  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000186d  00000000  00000000  0000070c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000895  00000000  00000000  00001f79  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000a4e  00000000  00000000  0000280e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000350  00000000  00000000  0000325c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000008da  00000000  00000000  000035ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000f88  00000000  00000000  00003e86  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000d8  00000000  00000000  00004e0e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  64:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	e0 e4       	ldi	r30, 0x40	; 64
+  7c:	f5 e0       	ldi	r31, 0x05	; 5
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	a0 30       	cpi	r26, 0x00	; 0
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	21 e0       	ldi	r18, 0x01	; 1
+  8c:	a0 e0       	ldi	r26, 0x00	; 0
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	a0 33       	cpi	r26, 0x30	; 48
+  96:	b2 07       	cpc	r27, r18
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	0e 94 8e 02 	call	0x51c	; 0x51c <main>
+  9e:	0c 94 9e 02 	jmp	0x53c	; 0x53c <_exit>
+
+000000a2 <__bad_interrupt>:
+  a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a6 <_Z8SPI_Initv>:
+  buff[0] = PICC_HALT;
+  buff[1] = 0;
+  CalulateCRC(buff, 2, &buff[2]);
+
+  status = MFRC522_ToCard(PCD_TRANSCEIVE, buff, 4, buff,&unLen);
+}
+  a6:	84 b1       	in	r24, 0x04	; 4
+  a8:	8e 62       	ori	r24, 0x2E	; 46
+  aa:	84 b9       	out	0x04, r24	; 4
+  ac:	84 b1       	in	r24, 0x04	; 4
+  ae:	8f 7e       	andi	r24, 0xEF	; 239
+  b0:	84 b9       	out	0x04, r24	; 4
+  b2:	85 b1       	in	r24, 0x05	; 5
+  b4:	84 60       	ori	r24, 0x04	; 4
+  b6:	85 b9       	out	0x05, r24	; 5
+  b8:	81 e5       	ldi	r24, 0x51	; 81
+  ba:	8c bd       	out	0x2c, r24	; 44
+  bc:	08 95       	ret
+
+000000be <_Z9SPI_Writeh>:
+  be:	8e bd       	out	0x2e, r24	; 46
+  c0:	0d b4       	in	r0, 0x2d	; 45
+  c2:	07 fe       	sbrs	r0, 7
+  c4:	fd cf       	rjmp	.-6      	; 0xc0 <_Z9SPI_Writeh+0x2>
+  c6:	8e b5       	in	r24, 0x2e	; 46
+  c8:	08 95       	ret
+
+000000ca <_Z15Separate_hexP10h>:
+  ca:	80 7f       	andi	r24, 0xF0	; 240
+  cc:	90 e0       	ldi	r25, 0x00	; 0
+  ce:	95 95       	asr	r25
+  d0:	87 95       	ror	r24
+  d2:	95 95       	asr	r25
+  d4:	87 95       	ror	r24
+  d6:	95 95       	asr	r25
+  d8:	87 95       	ror	r24
+  da:	95 95       	asr	r25
+  dc:	87 95       	ror	r24
+  de:	8a 30       	cpi	r24, 0x0A	; 10
+  e0:	10 f4       	brcc	.+4      	; 0xe6 <_Z15Separate_hexP10h+0x1c>
+  e2:	80 5d       	subi	r24, 0xD0	; 208
+  e4:	08 95       	ret
+  e6:	89 5c       	subi	r24, 0xC9	; 201
+  e8:	08 95       	ret
+
+000000ea <_Z14Separate_hexP1h>:
+  ea:	8f 70       	andi	r24, 0x0F	; 15
+  ec:	8a 30       	cpi	r24, 0x0A	; 10
+  ee:	10 f4       	brcc	.+4      	; 0xf4 <_Z14Separate_hexP1h+0xa>
+  f0:	80 5d       	subi	r24, 0xD0	; 208
+  f2:	08 95       	ret
+  f4:	89 5c       	subi	r24, 0xC9	; 201
+  f6:	08 95       	ret
+
+000000f8 <_Z15SetFormatRDM630v>:
+  f8:	af 92       	push	r10
+  fa:	bf 92       	push	r11
+  fc:	cf 92       	push	r12
+  fe:	df 92       	push	r13
+ 100:	ef 92       	push	r14
+ 102:	ff 92       	push	r15
+ 104:	0f 93       	push	r16
+ 106:	1f 93       	push	r17
+ 108:	cf 93       	push	r28
+ 10a:	df 93       	push	r29
+ 10c:	0b e2       	ldi	r16, 0x2B	; 43
+ 10e:	11 e0       	ldi	r17, 0x01	; 1
+ 110:	f8 01       	movw	r30, r16
+ 112:	f0 80       	ld	r15, Z
+ 114:	8f 2d       	mov	r24, r15
+ 116:	0e 94 65 00 	call	0xca	; 0xca <_Z15Separate_hexP10h>
+ 11a:	a8 2e       	mov	r10, r24
+ 11c:	c3 e2       	ldi	r28, 0x23	; 35
+ 11e:	d1 e0       	ldi	r29, 0x01	; 1
+ 120:	88 83       	st	Y, r24
+ 122:	8f 2d       	mov	r24, r15
+ 124:	0e 94 75 00 	call	0xea	; 0xea <_Z14Separate_hexP1h>
+ 128:	b8 2e       	mov	r11, r24
+ 12a:	89 83       	std	Y+1, r24	; 0x01
+ 12c:	f8 01       	movw	r30, r16
+ 12e:	f1 80       	ldd	r15, Z+1	; 0x01
+ 130:	8f 2d       	mov	r24, r15
+ 132:	0e 94 65 00 	call	0xca	; 0xca <_Z15Separate_hexP10h>
+ 136:	c8 2e       	mov	r12, r24
+ 138:	8a 83       	std	Y+2, r24	; 0x02
+ 13a:	8f 2d       	mov	r24, r15
+ 13c:	0e 94 75 00 	call	0xea	; 0xea <_Z14Separate_hexP1h>
+ 140:	d8 2e       	mov	r13, r24
+ 142:	8b 83       	std	Y+3, r24	; 0x03
+ 144:	f8 01       	movw	r30, r16
+ 146:	f2 80       	ldd	r15, Z+2	; 0x02
+ 148:	8f 2d       	mov	r24, r15
+ 14a:	0e 94 65 00 	call	0xca	; 0xca <_Z15Separate_hexP10h>
+ 14e:	e8 2e       	mov	r14, r24
+ 150:	8c 83       	std	Y+4, r24	; 0x04
+ 152:	8f 2d       	mov	r24, r15
+ 154:	0e 94 75 00 	call	0xea	; 0xea <_Z14Separate_hexP1h>
+ 158:	f8 2e       	mov	r15, r24
+ 15a:	8d 83       	std	Y+5, r24	; 0x05
+ 15c:	f8 01       	movw	r30, r16
+ 15e:	03 81       	ldd	r16, Z+3	; 0x03
+ 160:	80 2f       	mov	r24, r16
+ 162:	0e 94 65 00 	call	0xca	; 0xca <_Z15Separate_hexP10h>
+ 166:	18 2f       	mov	r17, r24
+ 168:	8e 83       	std	Y+6, r24	; 0x06
+ 16a:	80 2f       	mov	r24, r16
+ 16c:	0e 94 75 00 	call	0xea	; 0xea <_Z14Separate_hexP1h>
+ 170:	8f 83       	std	Y+7, r24	; 0x07
+ 172:	e9 e1       	ldi	r30, 0x19	; 25
+ 174:	f1 e0       	ldi	r31, 0x01	; 1
+ 176:	a0 82       	st	Z, r10
+ 178:	b1 82       	std	Z+1, r11	; 0x01
+ 17a:	c2 82       	std	Z+2, r12	; 0x02
+ 17c:	d3 82       	std	Z+3, r13	; 0x03
+ 17e:	e4 82       	std	Z+4, r14	; 0x04
+ 180:	f5 82       	std	Z+5, r15	; 0x05
+ 182:	16 83       	std	Z+6, r17	; 0x06
+ 184:	87 83       	std	Z+7, r24	; 0x07
+ 186:	df 91       	pop	r29
+ 188:	cf 91       	pop	r28
+ 18a:	1f 91       	pop	r17
+ 18c:	0f 91       	pop	r16
+ 18e:	ff 90       	pop	r15
+ 190:	ef 90       	pop	r14
+ 192:	df 90       	pop	r13
+ 194:	cf 90       	pop	r12
+ 196:	bf 90       	pop	r11
+ 198:	af 90       	pop	r10
+ 19a:	08 95       	ret
+
+0000019c <_Z13Write_MFRC522hh>:
+ 19c:	cf 93       	push	r28
+ 19e:	c6 2f       	mov	r28, r22
+ 1a0:	95 b1       	in	r25, 0x05	; 5
+ 1a2:	9b 7f       	andi	r25, 0xFB	; 251
+ 1a4:	95 b9       	out	0x05, r25	; 5
+ 1a6:	90 e0       	ldi	r25, 0x00	; 0
+ 1a8:	88 0f       	add	r24, r24
+ 1aa:	99 1f       	adc	r25, r25
+ 1ac:	8e 77       	andi	r24, 0x7E	; 126
+ 1ae:	0e 94 5f 00 	call	0xbe	; 0xbe <_Z9SPI_Writeh>
+ 1b2:	8c 2f       	mov	r24, r28
+ 1b4:	0e 94 5f 00 	call	0xbe	; 0xbe <_Z9SPI_Writeh>
+ 1b8:	85 b1       	in	r24, 0x05	; 5
+ 1ba:	84 60       	ori	r24, 0x04	; 4
+ 1bc:	85 b9       	out	0x05, r24	; 5
+ 1be:	cf 91       	pop	r28
+ 1c0:	08 95       	ret
+
+000001c2 <_Z12Read_MFRC522h>:
+ 1c2:	95 b1       	in	r25, 0x05	; 5
+ 1c4:	9b 7f       	andi	r25, 0xFB	; 251
+ 1c6:	95 b9       	out	0x05, r25	; 5
+ 1c8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ca:	88 0f       	add	r24, r24
+ 1cc:	99 1f       	adc	r25, r25
+ 1ce:	8e 77       	andi	r24, 0x7E	; 126
+ 1d0:	80 68       	ori	r24, 0x80	; 128
+ 1d2:	0e 94 5f 00 	call	0xbe	; 0xbe <_Z9SPI_Writeh>
+ 1d6:	80 e0       	ldi	r24, 0x00	; 0
+ 1d8:	0e 94 5f 00 	call	0xbe	; 0xbe <_Z9SPI_Writeh>
+ 1dc:	95 b1       	in	r25, 0x05	; 5
+ 1de:	94 60       	ori	r25, 0x04	; 4
+ 1e0:	95 b9       	out	0x05, r25	; 5
+ 1e2:	08 95       	ret
+
+000001e4 <_Z10SetBitMaskhh>:
+ 1e4:	cf 93       	push	r28
+ 1e6:	df 93       	push	r29
+ 1e8:	d8 2f       	mov	r29, r24
+ 1ea:	c6 2f       	mov	r28, r22
+ 1ec:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 1f0:	68 2f       	mov	r22, r24
+ 1f2:	6c 2b       	or	r22, r28
+ 1f4:	8d 2f       	mov	r24, r29
+ 1f6:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 1fa:	df 91       	pop	r29
+ 1fc:	cf 91       	pop	r28
+ 1fe:	08 95       	ret
+
+00000200 <_Z12ClearBitMaskhh>:
+ 200:	cf 93       	push	r28
+ 202:	df 93       	push	r29
+ 204:	d8 2f       	mov	r29, r24
+ 206:	c6 2f       	mov	r28, r22
+ 208:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 20c:	c0 95       	com	r28
+ 20e:	6c 2f       	mov	r22, r28
+ 210:	68 23       	and	r22, r24
+ 212:	8d 2f       	mov	r24, r29
+ 214:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 218:	df 91       	pop	r29
+ 21a:	cf 91       	pop	r28
+ 21c:	08 95       	ret
+
+0000021e <_Z9AntennaOnv>:
+ 21e:	84 e1       	ldi	r24, 0x14	; 20
+ 220:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 224:	83 70       	andi	r24, 0x03	; 3
+ 226:	21 f4       	brne	.+8      	; 0x230 <_Z9AntennaOnv+0x12>
+ 228:	63 e0       	ldi	r22, 0x03	; 3
+ 22a:	84 e1       	ldi	r24, 0x14	; 20
+ 22c:	0e 94 f2 00 	call	0x1e4	; 0x1e4 <_Z10SetBitMaskhh>
+ 230:	08 95       	ret
+
+00000232 <_Z13MFRC522_Resetv>:
+ 232:	6f e0       	ldi	r22, 0x0F	; 15
+ 234:	81 e0       	ldi	r24, 0x01	; 1
+ 236:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 23a:	08 95       	ret
+
+0000023c <_Z12MFRC522_Initv>:
+ 23c:	0e 94 19 01 	call	0x232	; 0x232 <_Z13MFRC522_Resetv>
+ 240:	6d e8       	ldi	r22, 0x8D	; 141
+ 242:	8a e2       	ldi	r24, 0x2A	; 42
+ 244:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 248:	6e e3       	ldi	r22, 0x3E	; 62
+ 24a:	8b e2       	ldi	r24, 0x2B	; 43
+ 24c:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 250:	6e e1       	ldi	r22, 0x1E	; 30
+ 252:	8d e2       	ldi	r24, 0x2D	; 45
+ 254:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 258:	60 e0       	ldi	r22, 0x00	; 0
+ 25a:	8c e2       	ldi	r24, 0x2C	; 44
+ 25c:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 260:	60 e4       	ldi	r22, 0x40	; 64
+ 262:	85 e1       	ldi	r24, 0x15	; 21
+ 264:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 268:	6d e3       	ldi	r22, 0x3D	; 61
+ 26a:	81 e1       	ldi	r24, 0x11	; 17
+ 26c:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 270:	0e 94 0f 01 	call	0x21e	; 0x21e <_Z9AntennaOnv>
+ 274:	08 95       	ret
+
+00000276 <_Z14MFRC522_ToCardhPhhS_Pj>:
+ 276:	7f 92       	push	r7
+ 278:	8f 92       	push	r8
+ 27a:	9f 92       	push	r9
+ 27c:	af 92       	push	r10
+ 27e:	bf 92       	push	r11
+ 280:	cf 92       	push	r12
+ 282:	df 92       	push	r13
+ 284:	ef 92       	push	r14
+ 286:	ff 92       	push	r15
+ 288:	0f 93       	push	r16
+ 28a:	1f 93       	push	r17
+ 28c:	cf 93       	push	r28
+ 28e:	df 93       	push	r29
+ 290:	98 2e       	mov	r9, r24
+ 292:	5b 01       	movw	r10, r22
+ 294:	74 2e       	mov	r7, r20
+ 296:	79 01       	movw	r14, r18
+ 298:	68 01       	movw	r12, r16
+ 29a:	8c e0       	ldi	r24, 0x0C	; 12
+ 29c:	98 16       	cp	r9, r24
+ 29e:	31 f0       	breq	.+12     	; 0x2ac <_Z14MFRC522_ToCardhPhhS_Pj+0x36>
+ 2a0:	ee e0       	ldi	r30, 0x0E	; 14
+ 2a2:	9e 16       	cp	r9, r30
+ 2a4:	49 f0       	breq	.+18     	; 0x2b8 <_Z14MFRC522_ToCardhPhhS_Pj+0x42>
+ 2a6:	00 e0       	ldi	r16, 0x00	; 0
+ 2a8:	81 2c       	mov	r8, r1
+ 2aa:	0b c0       	rjmp	.+22     	; 0x2c2 <_Z14MFRC522_ToCardhPhhS_Pj+0x4c>
+ 2ac:	00 e3       	ldi	r16, 0x30	; 48
+ 2ae:	0f 2e       	mov	r0, r31
+ 2b0:	f7 e7       	ldi	r31, 0x77	; 119
+ 2b2:	8f 2e       	mov	r8, r31
+ 2b4:	f0 2d       	mov	r31, r0
+ 2b6:	05 c0       	rjmp	.+10     	; 0x2c2 <_Z14MFRC522_ToCardhPhhS_Pj+0x4c>
+ 2b8:	00 e1       	ldi	r16, 0x10	; 16
+ 2ba:	0f 2e       	mov	r0, r31
+ 2bc:	f2 e1       	ldi	r31, 0x12	; 18
+ 2be:	8f 2e       	mov	r8, r31
+ 2c0:	f0 2d       	mov	r31, r0
+ 2c2:	68 2d       	mov	r22, r8
+ 2c4:	60 68       	ori	r22, 0x80	; 128
+ 2c6:	82 e0       	ldi	r24, 0x02	; 2
+ 2c8:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 2cc:	60 e8       	ldi	r22, 0x80	; 128
+ 2ce:	84 e0       	ldi	r24, 0x04	; 4
+ 2d0:	0e 94 00 01 	call	0x200	; 0x200 <_Z12ClearBitMaskhh>
+ 2d4:	60 e8       	ldi	r22, 0x80	; 128
+ 2d6:	8a e0       	ldi	r24, 0x0A	; 10
+ 2d8:	0e 94 f2 00 	call	0x1e4	; 0x1e4 <_Z10SetBitMaskhh>
+ 2dc:	60 e0       	ldi	r22, 0x00	; 0
+ 2de:	81 e0       	ldi	r24, 0x01	; 1
+ 2e0:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 2e4:	c0 e0       	ldi	r28, 0x00	; 0
+ 2e6:	d0 e0       	ldi	r29, 0x00	; 0
+ 2e8:	87 2d       	mov	r24, r7
+ 2ea:	90 e0       	ldi	r25, 0x00	; 0
+ 2ec:	c8 17       	cp	r28, r24
+ 2ee:	d9 07       	cpc	r29, r25
+ 2f0:	48 f4       	brcc	.+18     	; 0x304 <_Z14MFRC522_ToCardhPhhS_Pj+0x8e>
+ 2f2:	f5 01       	movw	r30, r10
+ 2f4:	ec 0f       	add	r30, r28
+ 2f6:	fd 1f       	adc	r31, r29
+ 2f8:	60 81       	ld	r22, Z
+ 2fa:	89 e0       	ldi	r24, 0x09	; 9
+ 2fc:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 300:	21 96       	adiw	r28, 0x01	; 1
+ 302:	f2 cf       	rjmp	.-28     	; 0x2e8 <_Z14MFRC522_ToCardhPhhS_Pj+0x72>
+ 304:	69 2d       	mov	r22, r9
+ 306:	81 e0       	ldi	r24, 0x01	; 1
+ 308:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 30c:	fc e0       	ldi	r31, 0x0C	; 12
+ 30e:	9f 12       	cpse	r9, r31
+ 310:	04 c0       	rjmp	.+8      	; 0x31a <_Z14MFRC522_ToCardhPhhS_Pj+0xa4>
+ 312:	60 e8       	ldi	r22, 0x80	; 128
+ 314:	8d e0       	ldi	r24, 0x0D	; 13
+ 316:	0e 94 f2 00 	call	0x1e4	; 0x1e4 <_Z10SetBitMaskhh>
+ 31a:	c0 ed       	ldi	r28, 0xD0	; 208
+ 31c:	d7 e0       	ldi	r29, 0x07	; 7
+ 31e:	84 e0       	ldi	r24, 0x04	; 4
+ 320:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 324:	18 2f       	mov	r17, r24
+ 326:	21 97       	sbiw	r28, 0x01	; 1
+ 328:	29 f0       	breq	.+10     	; 0x334 <_Z14MFRC522_ToCardhPhhS_Pj+0xbe>
+ 32a:	80 fd       	sbrc	r24, 0
+ 32c:	03 c0       	rjmp	.+6      	; 0x334 <_Z14MFRC522_ToCardhPhhS_Pj+0xbe>
+ 32e:	80 2f       	mov	r24, r16
+ 330:	81 23       	and	r24, r17
+ 332:	a9 f3       	breq	.-22     	; 0x31e <_Z14MFRC522_ToCardhPhhS_Pj+0xa8>
+ 334:	60 e8       	ldi	r22, 0x80	; 128
+ 336:	8d e0       	ldi	r24, 0x0D	; 13
+ 338:	0e 94 00 01 	call	0x200	; 0x200 <_Z12ClearBitMaskhh>
+ 33c:	cd 2b       	or	r28, r29
+ 33e:	09 f4       	brne	.+2      	; 0x342 <_Z14MFRC522_ToCardhPhhS_Pj+0xcc>
+ 340:	4b c0       	rjmp	.+150    	; 0x3d8 <_Z14MFRC522_ToCardhPhhS_Pj+0x162>
+ 342:	86 e0       	ldi	r24, 0x06	; 6
+ 344:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 348:	8b 71       	andi	r24, 0x1B	; 27
+ 34a:	09 f0       	breq	.+2      	; 0x34e <_Z14MFRC522_ToCardhPhhS_Pj+0xd8>
+ 34c:	47 c0       	rjmp	.+142    	; 0x3dc <_Z14MFRC522_ToCardhPhhS_Pj+0x166>
+ 34e:	18 21       	and	r17, r8
+ 350:	10 fd       	sbrc	r17, 0
+ 352:	02 c0       	rjmp	.+4      	; 0x358 <_Z14MFRC522_ToCardhPhhS_Pj+0xe2>
+ 354:	c0 e0       	ldi	r28, 0x00	; 0
+ 356:	01 c0       	rjmp	.+2      	; 0x35a <_Z14MFRC522_ToCardhPhhS_Pj+0xe4>
+ 358:	c1 e0       	ldi	r28, 0x01	; 1
+ 35a:	8c e0       	ldi	r24, 0x0C	; 12
+ 35c:	98 12       	cpse	r9, r24
+ 35e:	3f c0       	rjmp	.+126    	; 0x3de <_Z14MFRC522_ToCardhPhhS_Pj+0x168>
+ 360:	8a e0       	ldi	r24, 0x0A	; 10
+ 362:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 366:	d8 2f       	mov	r29, r24
+ 368:	8c e0       	ldi	r24, 0x0C	; 12
+ 36a:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 36e:	28 2f       	mov	r18, r24
+ 370:	27 70       	andi	r18, 0x07	; 7
+ 372:	79 f0       	breq	.+30     	; 0x392 <_Z14MFRC522_ToCardhPhhS_Pj+0x11c>
+ 374:	8d 2f       	mov	r24, r29
+ 376:	90 e0       	ldi	r25, 0x00	; 0
+ 378:	01 97       	sbiw	r24, 0x01	; 1
+ 37a:	88 0f       	add	r24, r24
+ 37c:	99 1f       	adc	r25, r25
+ 37e:	88 0f       	add	r24, r24
+ 380:	99 1f       	adc	r25, r25
+ 382:	88 0f       	add	r24, r24
+ 384:	99 1f       	adc	r25, r25
+ 386:	82 0f       	add	r24, r18
+ 388:	91 1d       	adc	r25, r1
+ 38a:	f6 01       	movw	r30, r12
+ 38c:	91 83       	std	Z+1, r25	; 0x01
+ 38e:	80 83       	st	Z, r24
+ 390:	0b c0       	rjmp	.+22     	; 0x3a8 <_Z14MFRC522_ToCardhPhhS_Pj+0x132>
+ 392:	8d 2f       	mov	r24, r29
+ 394:	90 e0       	ldi	r25, 0x00	; 0
+ 396:	88 0f       	add	r24, r24
+ 398:	99 1f       	adc	r25, r25
+ 39a:	88 0f       	add	r24, r24
+ 39c:	99 1f       	adc	r25, r25
+ 39e:	88 0f       	add	r24, r24
+ 3a0:	99 1f       	adc	r25, r25
+ 3a2:	f6 01       	movw	r30, r12
+ 3a4:	91 83       	std	Z+1, r25	; 0x01
+ 3a6:	80 83       	st	Z, r24
+ 3a8:	d1 11       	cpse	r29, r1
+ 3aa:	01 c0       	rjmp	.+2      	; 0x3ae <_Z14MFRC522_ToCardhPhhS_Pj+0x138>
+ 3ac:	d1 e0       	ldi	r29, 0x01	; 1
+ 3ae:	d1 31       	cpi	r29, 0x11	; 17
+ 3b0:	08 f0       	brcs	.+2      	; 0x3b4 <_Z14MFRC522_ToCardhPhhS_Pj+0x13e>
+ 3b2:	d0 e1       	ldi	r29, 0x10	; 16
+ 3b4:	00 e0       	ldi	r16, 0x00	; 0
+ 3b6:	10 e0       	ldi	r17, 0x00	; 0
+ 3b8:	8d 2f       	mov	r24, r29
+ 3ba:	90 e0       	ldi	r25, 0x00	; 0
+ 3bc:	08 17       	cp	r16, r24
+ 3be:	19 07       	cpc	r17, r25
+ 3c0:	70 f4       	brcc	.+28     	; 0x3de <_Z14MFRC522_ToCardhPhhS_Pj+0x168>
+ 3c2:	67 01       	movw	r12, r14
+ 3c4:	c0 0e       	add	r12, r16
+ 3c6:	d1 1e       	adc	r13, r17
+ 3c8:	89 e0       	ldi	r24, 0x09	; 9
+ 3ca:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z12Read_MFRC522h>
+ 3ce:	f6 01       	movw	r30, r12
+ 3d0:	80 83       	st	Z, r24
+ 3d2:	0f 5f       	subi	r16, 0xFF	; 255
+ 3d4:	1f 4f       	sbci	r17, 0xFF	; 255
+ 3d6:	f0 cf       	rjmp	.-32     	; 0x3b8 <_Z14MFRC522_ToCardhPhhS_Pj+0x142>
+ 3d8:	c2 e0       	ldi	r28, 0x02	; 2
+ 3da:	01 c0       	rjmp	.+2      	; 0x3de <_Z14MFRC522_ToCardhPhhS_Pj+0x168>
+ 3dc:	c2 e0       	ldi	r28, 0x02	; 2
+ 3de:	8c 2f       	mov	r24, r28
+ 3e0:	df 91       	pop	r29
+ 3e2:	cf 91       	pop	r28
+ 3e4:	1f 91       	pop	r17
+ 3e6:	0f 91       	pop	r16
+ 3e8:	ff 90       	pop	r15
+ 3ea:	ef 90       	pop	r14
+ 3ec:	df 90       	pop	r13
+ 3ee:	cf 90       	pop	r12
+ 3f0:	bf 90       	pop	r11
+ 3f2:	af 90       	pop	r10
+ 3f4:	9f 90       	pop	r9
+ 3f6:	8f 90       	pop	r8
+ 3f8:	7f 90       	pop	r7
+ 3fa:	08 95       	ret
+
+000003fc <_Z15MFRC522_RequesthPh>:
+ 3fc:	ef 92       	push	r14
+ 3fe:	ff 92       	push	r15
+ 400:	0f 93       	push	r16
+ 402:	1f 93       	push	r17
+ 404:	cf 93       	push	r28
+ 406:	df 93       	push	r29
+ 408:	00 d0       	rcall	.+0      	; 0x40a <__EEPROM_REGION_LENGTH__+0xa>
+ 40a:	cd b7       	in	r28, 0x3d	; 61
+ 40c:	de b7       	in	r29, 0x3e	; 62
+ 40e:	18 2f       	mov	r17, r24
+ 410:	7b 01       	movw	r14, r22
+ 412:	67 e0       	ldi	r22, 0x07	; 7
+ 414:	8d e0       	ldi	r24, 0x0D	; 13
+ 416:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 41a:	f7 01       	movw	r30, r14
+ 41c:	10 83       	st	Z, r17
+ 41e:	8e 01       	movw	r16, r28
+ 420:	0f 5f       	subi	r16, 0xFF	; 255
+ 422:	1f 4f       	sbci	r17, 0xFF	; 255
+ 424:	97 01       	movw	r18, r14
+ 426:	41 e0       	ldi	r20, 0x01	; 1
+ 428:	b7 01       	movw	r22, r14
+ 42a:	8c e0       	ldi	r24, 0x0C	; 12
+ 42c:	0e 94 3b 01 	call	0x276	; 0x276 <_Z14MFRC522_ToCardhPhhS_Pj>
+ 430:	81 11       	cpse	r24, r1
+ 432:	06 c0       	rjmp	.+12     	; 0x440 <__EEPROM_REGION_LENGTH__+0x40>
+ 434:	29 81       	ldd	r18, Y+1	; 0x01
+ 436:	3a 81       	ldd	r19, Y+2	; 0x02
+ 438:	20 31       	cpi	r18, 0x10	; 16
+ 43a:	31 05       	cpc	r19, r1
+ 43c:	19 f4       	brne	.+6      	; 0x444 <__EEPROM_REGION_LENGTH__+0x44>
+ 43e:	03 c0       	rjmp	.+6      	; 0x446 <__EEPROM_REGION_LENGTH__+0x46>
+ 440:	82 e0       	ldi	r24, 0x02	; 2
+ 442:	01 c0       	rjmp	.+2      	; 0x446 <__EEPROM_REGION_LENGTH__+0x46>
+ 444:	82 e0       	ldi	r24, 0x02	; 2
+ 446:	0f 90       	pop	r0
+ 448:	0f 90       	pop	r0
+ 44a:	df 91       	pop	r29
+ 44c:	cf 91       	pop	r28
+ 44e:	1f 91       	pop	r17
+ 450:	0f 91       	pop	r16
+ 452:	ff 90       	pop	r15
+ 454:	ef 90       	pop	r14
+ 456:	08 95       	ret
+
+00000458 <_Z16MFRC522_AnticollPh>:
+ 458:	ef 92       	push	r14
+ 45a:	ff 92       	push	r15
+ 45c:	0f 93       	push	r16
+ 45e:	1f 93       	push	r17
+ 460:	cf 93       	push	r28
+ 462:	df 93       	push	r29
+ 464:	00 d0       	rcall	.+0      	; 0x466 <_Z16MFRC522_AnticollPh+0xe>
+ 466:	cd b7       	in	r28, 0x3d	; 61
+ 468:	de b7       	in	r29, 0x3e	; 62
+ 46a:	7c 01       	movw	r14, r24
+ 46c:	60 e0       	ldi	r22, 0x00	; 0
+ 46e:	8d e0       	ldi	r24, 0x0D	; 13
+ 470:	0e 94 ce 00 	call	0x19c	; 0x19c <_Z13Write_MFRC522hh>
+ 474:	83 e9       	ldi	r24, 0x93	; 147
+ 476:	f7 01       	movw	r30, r14
+ 478:	80 83       	st	Z, r24
+ 47a:	80 e2       	ldi	r24, 0x20	; 32
+ 47c:	81 83       	std	Z+1, r24	; 0x01
+ 47e:	8e 01       	movw	r16, r28
+ 480:	0f 5f       	subi	r16, 0xFF	; 255
+ 482:	1f 4f       	sbci	r17, 0xFF	; 255
+ 484:	97 01       	movw	r18, r14
+ 486:	42 e0       	ldi	r20, 0x02	; 2
+ 488:	b7 01       	movw	r22, r14
+ 48a:	8c e0       	ldi	r24, 0x0C	; 12
+ 48c:	0e 94 3b 01 	call	0x276	; 0x276 <_Z14MFRC522_ToCardhPhhS_Pj>
+ 490:	81 11       	cpse	r24, r1
+ 492:	11 c0       	rjmp	.+34     	; 0x4b6 <_Z16MFRC522_AnticollPh+0x5e>
+ 494:	20 e0       	ldi	r18, 0x00	; 0
+ 496:	90 e0       	ldi	r25, 0x00	; 0
+ 498:	94 30       	cpi	r25, 0x04	; 4
+ 49a:	38 f4       	brcc	.+14     	; 0x4aa <_Z16MFRC522_AnticollPh+0x52>
+ 49c:	f7 01       	movw	r30, r14
+ 49e:	e9 0f       	add	r30, r25
+ 4a0:	f1 1d       	adc	r31, r1
+ 4a2:	30 81       	ld	r19, Z
+ 4a4:	23 27       	eor	r18, r19
+ 4a6:	9f 5f       	subi	r25, 0xFF	; 255
+ 4a8:	f7 cf       	rjmp	.-18     	; 0x498 <_Z16MFRC522_AnticollPh+0x40>
+ 4aa:	f7 01       	movw	r30, r14
+ 4ac:	e9 0f       	add	r30, r25
+ 4ae:	f1 1d       	adc	r31, r1
+ 4b0:	90 81       	ld	r25, Z
+ 4b2:	29 13       	cpse	r18, r25
+ 4b4:	82 e0       	ldi	r24, 0x02	; 2
+ 4b6:	0f 90       	pop	r0
+ 4b8:	0f 90       	pop	r0
+ 4ba:	df 91       	pop	r29
+ 4bc:	cf 91       	pop	r28
+ 4be:	1f 91       	pop	r17
+ 4c0:	0f 91       	pop	r16
+ 4c2:	ff 90       	pop	r15
+ 4c4:	ef 90       	pop	r14
+ 4c6:	08 95       	ret
+
+000004c8 <_Z7readingv>:
+void reading(){
+	
+	
+	
+	//Find cards, return card type - Don't remove this sub
+	status = MFRC522_Request(PICC_REQIDL, str);
+ 4c8:	69 e0       	ldi	r22, 0x09	; 9
+ 4ca:	71 e0       	ldi	r23, 0x01	; 1
+ 4cc:	86 e2       	ldi	r24, 0x26	; 38
+ 4ce:	0e 94 fe 01 	call	0x3fc	; 0x3fc <_Z15MFRC522_RequesthPh>
+ 4d2:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <status>
+	//Anti-collision, return card serial number 4 bytes
+	status = MFRC522_Anticoll(str);
+ 4d6:	89 e0       	ldi	r24, 0x09	; 9
+ 4d8:	91 e0       	ldi	r25, 0x01	; 1
+ 4da:	0e 94 2c 02 	call	0x458	; 0x458 <_Z16MFRC522_AnticollPh>
+ 4de:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <status>
+	memcpy(serNum, str, 5);
+ 4e2:	95 e0       	ldi	r25, 0x05	; 5
+ 4e4:	e9 e0       	ldi	r30, 0x09	; 9
+ 4e6:	f1 e0       	ldi	r31, 0x01	; 1
+ 4e8:	ab e2       	ldi	r26, 0x2B	; 43
+ 4ea:	b1 e0       	ldi	r27, 0x01	; 1
+ 4ec:	01 90       	ld	r0, Z+
+ 4ee:	0d 92       	st	X+, r0
+ 4f0:	9a 95       	dec	r25
+ 4f2:	e1 f7       	brne	.-8      	; 0x4ec <_Z7readingv+0x24>
+
+	if (status == MI_OK)   //if ther is a new card detected
+ 4f4:	81 11       	cpse	r24, r1
+ 4f6:	11 c0       	rjmp	.+34     	; 0x51a <_Z7readingv+0x52>
+	{
+		SetFormatRDM630(); // take serNum and format it and retern read
+ 4f8:	0e 94 7c 00 	call	0xf8	; 0xf8 <_Z15SetFormatRDM630v>
+		for(uint8_t i=0;i<8;i++){
+ 4fc:	20 e0       	ldi	r18, 0x00	; 0
+ 4fe:	28 30       	cpi	r18, 0x08	; 8
+ 500:	60 f4       	brcc	.+24     	; 0x51a <_Z7readingv+0x52>
+			ReadingCard[i]=read[i];
+ 502:	82 2f       	mov	r24, r18
+ 504:	90 e0       	ldi	r25, 0x00	; 0
+ 506:	fc 01       	movw	r30, r24
+ 508:	e7 5e       	subi	r30, 0xE7	; 231
+ 50a:	fe 4f       	sbci	r31, 0xFE	; 254
+ 50c:	30 81       	ld	r19, Z
+ 50e:	fc 01       	movw	r30, r24
+ 510:	e0 50       	subi	r30, 0x00	; 0
+ 512:	ff 4f       	sbci	r31, 0xFF	; 255
+ 514:	30 83       	st	Z, r19
+	memcpy(serNum, str, 5);
+
+	if (status == MI_OK)   //if ther is a new card detected
+	{
+		SetFormatRDM630(); // take serNum and format it and retern read
+		for(uint8_t i=0;i<8;i++){
+ 516:	2f 5f       	subi	r18, 0xFF	; 255
+ 518:	f2 cf       	rjmp	.-28     	; 0x4fe <_Z7readingv+0x36>
+ 51a:	08 95       	ret
+
+0000051c <main>:
+uint8_t ReadingCard [8]={};
+void reading();
+
+int main(void)
+{
+    SPI_Init();
+ 51c:	0e 94 53 00 	call	0xa6	; 0xa6 <_Z8SPI_Initv>
+    MFRC522_Init();   // Initialize RC522 module
+ 520:	0e 94 1e 01 	call	0x23c	; 0x23c <_Z12MFRC522_Initv>
+	
+    while (1) 
+    { reading();
+ 524:	0e 94 64 02 	call	0x4c8	; 0x4c8 <_Z7readingv>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 528:	2f ef       	ldi	r18, 0xFF	; 255
+ 52a:	80 e7       	ldi	r24, 0x70	; 112
+ 52c:	92 e0       	ldi	r25, 0x02	; 2
+ 52e:	21 50       	subi	r18, 0x01	; 1
+ 530:	80 40       	sbci	r24, 0x00	; 0
+ 532:	90 40       	sbci	r25, 0x00	; 0
+ 534:	e1 f7       	brne	.-8      	; 0x52e <main+0x12>
+ 536:	00 c0       	rjmp	.+0      	; 0x538 <main+0x1c>
+ 538:	00 00       	nop
+ 53a:	f4 cf       	rjmp	.-24     	; 0x524 <main+0x8>
+
+0000053c <_exit>:
+ 53c:	f8 94       	cli
+
+0000053e <__stop_program>:
+ 53e:	ff cf       	rjmp	.-2      	; 0x53e <__stop_program>

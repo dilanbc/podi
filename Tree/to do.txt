@@ -1,0 +1,59 @@
+
+AT+CWMODE_DEF=1  //mode select
+AT+CWJAP_DEF="SLT-HOME-WIFI","dilan12345"
+AT+CWLAP  //search wifi
+AT+CWJAP_DEF? //check wifi connected
+AT+CWQAP  //disconnected
+
+
+
+
+
+
+GET /tree/write.php?up=H56T85.3L0.0501E  HTTP/1.0
+
+
+AT+CIPMUX=1
+-GET-
+AT+CIPSTART=4,"TCP","192.168.1.104",80
+
+AT+CIPSEND=4,38
+
+GET /tree/write.php?up=H56T85.3L0.0501E 
+
+Host:192.168.1.104
+
+AT+CIPCLOSE
+
+
+-POST-
+
+AT+CIPSTART=4,"TCP","192.168.1.104",80
+
+AT+CIPSEND=4,203
+
+POST /tree/write.php HTTP/1.0
+
+Host: 192.168.1.104 
+
+Accept: */*
+
+Content-Length: 19
+
+Content-Type: application/x-www-form-urlencoded
+
+//Enter line
+
+up=H56T85.3L0.0501E
+
+
+-Read Data-
+
+AT+CIPSTART=4,"TCP","192.168.1.104",80
+
+AT+CIPSEND=4,28
+
+GET /tree/readwrite.php HTTP/1.0
+
+//temp
+GET /powerpanel/write.php?up=L101V29A65E

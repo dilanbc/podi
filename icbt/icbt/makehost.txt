@@ -1,0 +1,203 @@
+bool routerconnect(){
+	oled_clear_screen();
+	oled_gotoxy(0,2);
+	oled_font_size(0);
+	oled_write("Make host");
+	//**********************
+	USART_TxStringln("AT+CWMODE=2");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{USART_ClearRX();
+	}
+	else
+	{
+		return 0;
+	}
+	//**********************
+	USART_TxStringln("AT+CIPMUX=1");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{
+		USART_ClearRX();
+		
+	}
+	else
+	{	USART_TxStringln("AT+RST");
+		_delay_ms(1000);
+		
+		return 0;
+	}
+	//**********************
+	USART_TxStringln("AT+CIPDINFO=0");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{USART_ClearRX();
+	}
+	else
+	{
+		return 0;
+	}
+	//**********************
+	USART_TxStringln("AT+CIPSERVER=1,80");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",1000))
+	{USART_ClearRX();
+	}
+	else
+	{	return 0;
+	}
+	USART_TxStringln("AT+CIFSR");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{	
+		tempcharacter=strtok(rxvalue,"\"");
+		for(uint8_t i=0;i<5;i++){
+			tempcharacter=strtok(NULL,"\"");
+			if (strstr(tempcharacter,"192"))
+			{	
+				
+				oled_gotoxy(0,3);
+				oled_font_size(0);
+				oled_write_str(tempcharacter);
+				break;
+			}
+			if (i==4)
+			{return 0;
+			}
+		}
+	}
+	else
+	{
+		return 0;
+	}
+	//******************************************
+	//wait for login
+	 if (USART_ReciveWait("Host"))
+	 {_delay_ms(500);
+		USART_ClearRX(); 
+		oled_gotoxy(0,4);
+		oled_write("loggin OK");
+	 } 
+	 else
+	 {	USART_ClearRX(); 
+		oled_gotoxy(0,4);
+		oled_write("loggin failed");
+		 return 0;
+	 }
+	//******************************************
+	char*webpage="<!DOCTYPE html><html><body><h1>Router Configer</h1><form action=\"/action_page.php\"><label for=\"roterUsr\">Username:</label><input type=\"text\" id=\"roterUsr\" name=\"roterUsr\"><br><br><label for=\"routerPass\">Password:</label><input type=\"text\" id=\"routerPass\" name=\"routerPass\"><br><br><input type=\"submit\" value=\"Submit\"></form></body></html>\r\n";
+	sprintf(lengthcal,"AT+CIPSEND=0,%d",strlen(webpage));
+	USART_TxStringln(lengthcal);
+	_delay_ms(500);
+	USART_TxString(webpage);
+	_delay_ms(500);
+	//**********************
+	USART_TxStringln("AT+CIPCLOSE=0");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{USART_ClearRX();
+	}
+	else
+	{
+		return 0;
+	}
+	
+	//**********************
+	USART_ClearRX();
+	UCSR0B&=~(1<<RXCIE0);
+	char tempchar[100];
+	char scanChar[4];
+	uint8_t tempcharCount=0;
+	while(1){
+	while ( !(UCSR0A & (1<<RXC0)) ){
+		
+	}
+	
+	char Readchar=UDR0;
+	for(uint8_t i=0;i<100;i++){
+		tempchar[i]=tempchar[i+1];
+	}
+	tempchar[99]=Readchar;
+	for(uint8_t i=0;i<4;i++){
+		scanChar[i]=tempchar[i];
+	}
+	
+	if (strstr(scanChar,"php?"))
+	{	
+		memset(wifiUsername,0,40);
+		memset(wifiPassword,0,40);
+		oled_gotoxy(0,4);
+		oled_write("                ");
+		oled_gotoxy(0,5);
+		oled_write("                ");
+		/*php?roterUsr=Slt-home-fwifi-dilan&routerPass=dilan12345 HTTP/1.1*/
+		strncpy(wifiUsername,strstr(tempchar,"roterUsr")+9,strlen(strstr(tempchar,"roterUsr")+9)-strlen(strstr(tempchar,"&routerPass")));
+		strncpy(wifiPassword,strstr(tempchar,"routerPass")+11,strlen(strstr(tempchar,"routerPass")+11)-strlen(strstr(tempchar," HTTP")));
+		oled_gotoxy(0,5);
+		char tempwifi[20];
+		strncpy(tempwifi,wifiUsername,15);
+		oled_write_str(tempwifi);
+		oled_gotoxy(0,6);
+		strncpy(tempwifi,wifiPassword,15);
+		oled_write_str(tempwifi);
+		memset(scanChar,0,4);
+		memset(tempchar,0,100);//clear array
+		_delay_ms(1000);
+	}
+	if (!(PINB&0b00000001))
+	{
+		break;
+	}
+	
+	}
+UCSR0B|=(1<<RXCIE0);// enable rec intruppert
+//**********************************************************************
+	USART_ClearRX();
+	USART_TxStringln("AT+CWMODE=1");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{USART_ClearRX();
+	} 
+	else
+	{	USART_ClearRX();
+		return 0;
+	}
+	
+	
+	USART_TxStringln("AT+CIPMUX=1");
+	_delay_ms(100);
+	if (USART_ReciveWait("OK",500))
+	{
+		USART_ClearRX();
+		
+	}
+//**************************************************************
+	
+USART_ClearRX();
+
+USART_TxStringln("AT+CWQAP");
+if (USART_ReciveWait("OK",1000))
+{
+	USART_ClearRX();
+	
+	sprintf(tempcharacter,"AT+CWJAP=\"%s\",\"%s\"",wifiUsername,wifiPassword);
+	
+	USART_TxStringln(tempcharacter);
+	
+	if (USART_ReciveWait("GOT",10000))
+	{
+		oled_gotoxy(0,5);
+		oled_write("Router Connected");
+		USART_ClearRX();
+		return 1;
+	}
+	else
+	{	
+		oled_gotoxy(0,5);
+		oled_write("not connected");
+		_delay_ms(2000);
+		USART_ClearRX();
+		return 0;
+	}
+	}
+ }

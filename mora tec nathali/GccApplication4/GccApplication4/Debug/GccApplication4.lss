@@ -1,0 +1,430 @@
+
+GccApplication4.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000023c  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000290  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000290  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002c0  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000030  00000000  00000000  000002fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000009ba  00000000  00000000  0000032c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000060f  00000000  00000000  00000ce6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003ee  00000000  00000000  000012f5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000044  00000000  00000000  000016e4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003bc  00000000  00000000  00001728  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000003d6  00000000  00000000  00001ae4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000020  00000000  00000000  00001eba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 0e 01 	call	0x21c	; 0x21c <main>
+  64:	0c 94 1c 01 	jmp	0x238	; 0x238 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <_Z7stepperjb>:
+#define F_CPU 8000000
+#include <avr/io.h>
+#include <util/delay.h>
+
+void stepper(uint16_t rev,bool dir){
+  6c:	fc 01       	movw	r30, r24
+	for(uint16_t j=0;j<rev;j++){
+  6e:	40 e0       	ldi	r20, 0x00	; 0
+  70:	50 e0       	ldi	r21, 0x00	; 0
+  72:	4e 17       	cp	r20, r30
+  74:	5f 07       	cpc	r21, r31
+  76:	08 f0       	brcs	.+2      	; 0x7a <_Z7stepperjb+0xe>
+  78:	72 c0       	rjmp	.+228    	; 0x15e <_Z7stepperjb+0xf2>
+		//4,4+5,5,5+6,6,6+7,7,7+4
+		if (dir)
+  7a:	66 23       	and	r22, r22
+  7c:	b9 f1       	breq	.+110    	; 0xec <_Z7stepperjb+0x80>
+  7e:	94 e0       	ldi	r25, 0x04	; 4
+		{for(uint8_t i=4;i<8;i++){
+  80:	98 30       	cpi	r25, 0x08	; 8
+  82:	08 f0       	brcs	.+2      	; 0x86 <_Z7stepperjb+0x1a>
+  84:	69 c0       	rjmp	.+210    	; 0x158 <_Z7stepperjb+0xec>
+			PORTD=(PORTD&0x0F)|(1<<i);
+  86:	82 b3       	in	r24, 0x12	; 18
+  88:	a9 2f       	mov	r26, r25
+  8a:	b0 e0       	ldi	r27, 0x00	; 0
+  8c:	21 e0       	ldi	r18, 0x01	; 1
+  8e:	30 e0       	ldi	r19, 0x00	; 0
+  90:	09 2e       	mov	r0, r25
+  92:	02 c0       	rjmp	.+4      	; 0x98 <_Z7stepperjb+0x2c>
+  94:	22 0f       	add	r18, r18
+  96:	33 1f       	adc	r19, r19
+  98:	0a 94       	dec	r0
+  9a:	e2 f7       	brpl	.-8      	; 0x94 <_Z7stepperjb+0x28>
+  9c:	8f 70       	andi	r24, 0x0F	; 15
+  9e:	28 2b       	or	r18, r24
+  a0:	22 bb       	out	0x12, r18	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a2:	2f ef       	ldi	r18, 0xFF	; 255
+  a4:	30 e7       	ldi	r19, 0x70	; 112
+  a6:	82 e0       	ldi	r24, 0x02	; 2
+  a8:	21 50       	subi	r18, 0x01	; 1
+  aa:	30 40       	sbci	r19, 0x00	; 0
+  ac:	80 40       	sbci	r24, 0x00	; 0
+  ae:	e1 f7       	brne	.-8      	; 0xa8 <_Z7stepperjb+0x3c>
+  b0:	00 c0       	rjmp	.+0      	; 0xb2 <_Z7stepperjb+0x46>
+  b2:	00 00       	nop
+			_delay_ms(100);
+			if (i==7)
+  b4:	97 30       	cpi	r25, 0x07	; 7
+  b6:	21 f4       	brne	.+8      	; 0xc0 <_Z7stepperjb+0x54>
+			{PORTD|=(1<<4);
+  b8:	82 b3       	in	r24, 0x12	; 18
+  ba:	80 61       	ori	r24, 0x10	; 16
+  bc:	82 bb       	out	0x12, r24	; 18
+  be:	0b c0       	rjmp	.+22     	; 0xd6 <_Z7stepperjb+0x6a>
+			}
+			else
+			{PORTD|=(1<<i+1);
+  c0:	82 b3       	in	r24, 0x12	; 18
+  c2:	11 96       	adiw	r26, 0x01	; 1
+  c4:	21 e0       	ldi	r18, 0x01	; 1
+  c6:	30 e0       	ldi	r19, 0x00	; 0
+  c8:	02 c0       	rjmp	.+4      	; 0xce <_Z7stepperjb+0x62>
+  ca:	22 0f       	add	r18, r18
+  cc:	33 1f       	adc	r19, r19
+  ce:	aa 95       	dec	r26
+  d0:	e2 f7       	brpl	.-8      	; 0xca <_Z7stepperjb+0x5e>
+  d2:	28 2b       	or	r18, r24
+  d4:	22 bb       	out	0x12, r18	; 18
+  d6:	2f ef       	ldi	r18, 0xFF	; 255
+  d8:	30 e7       	ldi	r19, 0x70	; 112
+  da:	82 e0       	ldi	r24, 0x02	; 2
+  dc:	21 50       	subi	r18, 0x01	; 1
+  de:	30 40       	sbci	r19, 0x00	; 0
+  e0:	80 40       	sbci	r24, 0x00	; 0
+  e2:	e1 f7       	brne	.-8      	; 0xdc <_Z7stepperjb+0x70>
+  e4:	00 c0       	rjmp	.+0      	; 0xe6 <_Z7stepperjb+0x7a>
+  e6:	00 00       	nop
+
+void stepper(uint16_t rev,bool dir){
+	for(uint16_t j=0;j<rev;j++){
+		//4,4+5,5,5+6,6,6+7,7,7+4
+		if (dir)
+		{for(uint8_t i=4;i<8;i++){
+  e8:	9f 5f       	subi	r25, 0xFF	; 255
+  ea:	ca cf       	rjmp	.-108    	; 0x80 <_Z7stepperjb+0x14>
+  ec:	97 e0       	ldi	r25, 0x07	; 7
+			}
+			_delay_ms(100);
+		}
+	}
+	else
+	{for(uint8_t i=7;i>3;i--){
+  ee:	94 30       	cpi	r25, 0x04	; 4
+  f0:	98 f1       	brcs	.+102    	; 0x158 <_Z7stepperjb+0xec>
+		PORTD=(PORTD&0x0F)|(1<<i);
+  f2:	82 b3       	in	r24, 0x12	; 18
+  f4:	a9 2f       	mov	r26, r25
+  f6:	b0 e0       	ldi	r27, 0x00	; 0
+  f8:	21 e0       	ldi	r18, 0x01	; 1
+  fa:	30 e0       	ldi	r19, 0x00	; 0
+  fc:	09 2e       	mov	r0, r25
+  fe:	02 c0       	rjmp	.+4      	; 0x104 <_Z7stepperjb+0x98>
+ 100:	22 0f       	add	r18, r18
+ 102:	33 1f       	adc	r19, r19
+ 104:	0a 94       	dec	r0
+ 106:	e2 f7       	brpl	.-8      	; 0x100 <_Z7stepperjb+0x94>
+ 108:	8f 70       	andi	r24, 0x0F	; 15
+ 10a:	28 2b       	or	r18, r24
+ 10c:	22 bb       	out	0x12, r18	; 18
+ 10e:	2f ef       	ldi	r18, 0xFF	; 255
+ 110:	30 e7       	ldi	r19, 0x70	; 112
+ 112:	82 e0       	ldi	r24, 0x02	; 2
+ 114:	21 50       	subi	r18, 0x01	; 1
+ 116:	30 40       	sbci	r19, 0x00	; 0
+ 118:	80 40       	sbci	r24, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <_Z7stepperjb+0xa8>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <_Z7stepperjb+0xb2>
+ 11e:	00 00       	nop
+		_delay_ms(100);
+		if (i==7)
+ 120:	97 30       	cpi	r25, 0x07	; 7
+ 122:	21 f4       	brne	.+8      	; 0x12c <_Z7stepperjb+0xc0>
+		{PORTD|=(1<<7);
+ 124:	82 b3       	in	r24, 0x12	; 18
+ 126:	80 68       	ori	r24, 0x80	; 128
+ 128:	82 bb       	out	0x12, r24	; 18
+ 12a:	0b c0       	rjmp	.+22     	; 0x142 <_Z7stepperjb+0xd6>
+		}
+		else
+		{PORTD|=(1<<i-1);
+ 12c:	82 b3       	in	r24, 0x12	; 18
+ 12e:	11 97       	sbiw	r26, 0x01	; 1
+ 130:	21 e0       	ldi	r18, 0x01	; 1
+ 132:	30 e0       	ldi	r19, 0x00	; 0
+ 134:	02 c0       	rjmp	.+4      	; 0x13a <_Z7stepperjb+0xce>
+ 136:	22 0f       	add	r18, r18
+ 138:	33 1f       	adc	r19, r19
+ 13a:	aa 95       	dec	r26
+ 13c:	e2 f7       	brpl	.-8      	; 0x136 <_Z7stepperjb+0xca>
+ 13e:	28 2b       	or	r18, r24
+ 140:	22 bb       	out	0x12, r18	; 18
+ 142:	2f ef       	ldi	r18, 0xFF	; 255
+ 144:	30 e7       	ldi	r19, 0x70	; 112
+ 146:	82 e0       	ldi	r24, 0x02	; 2
+ 148:	21 50       	subi	r18, 0x01	; 1
+ 14a:	30 40       	sbci	r19, 0x00	; 0
+ 14c:	80 40       	sbci	r24, 0x00	; 0
+ 14e:	e1 f7       	brne	.-8      	; 0x148 <_Z7stepperjb+0xdc>
+ 150:	00 c0       	rjmp	.+0      	; 0x152 <_Z7stepperjb+0xe6>
+ 152:	00 00       	nop
+			}
+			_delay_ms(100);
+		}
+	}
+	else
+	{for(uint8_t i=7;i>3;i--){
+ 154:	91 50       	subi	r25, 0x01	; 1
+ 156:	cb cf       	rjmp	.-106    	; 0xee <_Z7stepperjb+0x82>
+#define F_CPU 8000000
+#include <avr/io.h>
+#include <util/delay.h>
+
+void stepper(uint16_t rev,bool dir){
+	for(uint16_t j=0;j<rev;j++){
+ 158:	4f 5f       	subi	r20, 0xFF	; 255
+ 15a:	5f 4f       	sbci	r21, 0xFF	; 255
+ 15c:	8a cf       	rjmp	.-236    	; 0x72 <_Z7stepperjb+0x6>
+ 15e:	08 95       	ret
+
+00000160 <_Z10servoangleh>:
+
+}
+
+void servoangle(uint8_t pin){
+	
+	for(uint8_t j=0;j<100;j++){
+ 160:	40 e0       	ldi	r20, 0x00	; 0
+ 162:	44 36       	cpi	r20, 0x64	; 100
+ 164:	38 f5       	brcc	.+78     	; 0x1b4 <_Z10servoangleh+0x54>
+		PORTB|=(1<<pin);
+ 166:	98 b3       	in	r25, 0x18	; 24
+ 168:	21 e0       	ldi	r18, 0x01	; 1
+ 16a:	30 e0       	ldi	r19, 0x00	; 0
+ 16c:	08 2e       	mov	r0, r24
+ 16e:	02 c0       	rjmp	.+4      	; 0x174 <_Z10servoangleh+0x14>
+ 170:	22 0f       	add	r18, r18
+ 172:	33 1f       	adc	r19, r19
+ 174:	0a 94       	dec	r0
+ 176:	e2 f7       	brpl	.-8      	; 0x170 <_Z10servoangleh+0x10>
+ 178:	92 2b       	or	r25, r18
+ 17a:	98 bb       	out	0x18, r25	; 24
+		for(uint8_t i=0;i<10;i++){
+ 17c:	90 e0       	ldi	r25, 0x00	; 0
+ 17e:	9a 30       	cpi	r25, 0x0A	; 10
+ 180:	40 f4       	brcc	.+16     	; 0x192 <_Z10servoangleh+0x32>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 182:	e7 ec       	ldi	r30, 0xC7	; 199
+ 184:	f0 e0       	ldi	r31, 0x00	; 0
+ 186:	31 97       	sbiw	r30, 0x01	; 1
+ 188:	f1 f7       	brne	.-4      	; 0x186 <_Z10servoangleh+0x26>
+ 18a:	00 c0       	rjmp	.+0      	; 0x18c <_Z10servoangleh+0x2c>
+ 18c:	00 00       	nop
+ 18e:	9f 5f       	subi	r25, 0xFF	; 255
+ 190:	f6 cf       	rjmp	.-20     	; 0x17e <_Z10servoangleh+0x1e>
+			_delay_us(100);
+		}
+		PORTB&=~(1<<pin);
+ 192:	98 b3       	in	r25, 0x18	; 24
+ 194:	20 95       	com	r18
+ 196:	29 23       	and	r18, r25
+ 198:	28 bb       	out	0x18, r18	; 24
+		
+		uint8_t ser=200-10;
+		
+		for(uint8_t i=0;i<ser;i++){
+ 19a:	90 e0       	ldi	r25, 0x00	; 0
+ 19c:	9e 3b       	cpi	r25, 0xBE	; 190
+ 19e:	40 f4       	brcc	.+16     	; 0x1b0 <_Z10servoangleh+0x50>
+ 1a0:	e7 ec       	ldi	r30, 0xC7	; 199
+ 1a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a4:	31 97       	sbiw	r30, 0x01	; 1
+ 1a6:	f1 f7       	brne	.-4      	; 0x1a4 <_Z10servoangleh+0x44>
+ 1a8:	00 c0       	rjmp	.+0      	; 0x1aa <_Z10servoangleh+0x4a>
+ 1aa:	00 00       	nop
+ 1ac:	9f 5f       	subi	r25, 0xFF	; 255
+ 1ae:	f6 cf       	rjmp	.-20     	; 0x19c <_Z10servoangleh+0x3c>
+
+}
+
+void servoangle(uint8_t pin){
+	
+	for(uint8_t j=0;j<100;j++){
+ 1b0:	4f 5f       	subi	r20, 0xFF	; 255
+ 1b2:	d7 cf       	rjmp	.-82     	; 0x162 <_Z10servoangleh+0x2>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1b4:	ff ef       	ldi	r31, 0xFF	; 255
+ 1b6:	24 e3       	ldi	r18, 0x34	; 52
+ 1b8:	3c e0       	ldi	r19, 0x0C	; 12
+ 1ba:	f1 50       	subi	r31, 0x01	; 1
+ 1bc:	20 40       	sbci	r18, 0x00	; 0
+ 1be:	30 40       	sbci	r19, 0x00	; 0
+ 1c0:	e1 f7       	brne	.-8      	; 0x1ba <_Z10servoangleh+0x5a>
+ 1c2:	00 c0       	rjmp	.+0      	; 0x1c4 <_Z10servoangleh+0x64>
+ 1c4:	00 00       	nop
+		for(uint8_t i=0;i<ser;i++){
+			_delay_us(100);
+		}
+	}
+	_delay_ms(500);
+	for(uint8_t j=0;j<100;j++){
+ 1c6:	40 e0       	ldi	r20, 0x00	; 0
+ 1c8:	44 36       	cpi	r20, 0x64	; 100
+ 1ca:	38 f5       	brcc	.+78     	; 0x21a <_Z10servoangleh+0xba>
+		
+		PORTB|=(1<<pin);
+ 1cc:	98 b3       	in	r25, 0x18	; 24
+ 1ce:	21 e0       	ldi	r18, 0x01	; 1
+ 1d0:	30 e0       	ldi	r19, 0x00	; 0
+ 1d2:	08 2e       	mov	r0, r24
+ 1d4:	02 c0       	rjmp	.+4      	; 0x1da <_Z10servoangleh+0x7a>
+ 1d6:	22 0f       	add	r18, r18
+ 1d8:	33 1f       	adc	r19, r19
+ 1da:	0a 94       	dec	r0
+ 1dc:	e2 f7       	brpl	.-8      	; 0x1d6 <_Z10servoangleh+0x76>
+ 1de:	92 2b       	or	r25, r18
+ 1e0:	98 bb       	out	0x18, r25	; 24
+		for(uint8_t i=0;i<15;i++){
+ 1e2:	90 e0       	ldi	r25, 0x00	; 0
+ 1e4:	9f 30       	cpi	r25, 0x0F	; 15
+ 1e6:	40 f4       	brcc	.+16     	; 0x1f8 <_Z10servoangleh+0x98>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1e8:	e7 ec       	ldi	r30, 0xC7	; 199
+ 1ea:	f0 e0       	ldi	r31, 0x00	; 0
+ 1ec:	31 97       	sbiw	r30, 0x01	; 1
+ 1ee:	f1 f7       	brne	.-4      	; 0x1ec <_Z10servoangleh+0x8c>
+ 1f0:	00 c0       	rjmp	.+0      	; 0x1f2 <_Z10servoangleh+0x92>
+ 1f2:	00 00       	nop
+ 1f4:	9f 5f       	subi	r25, 0xFF	; 255
+ 1f6:	f6 cf       	rjmp	.-20     	; 0x1e4 <_Z10servoangleh+0x84>
+			_delay_us(100);
+		}
+		PORTB&=~(1<<pin);
+ 1f8:	98 b3       	in	r25, 0x18	; 24
+ 1fa:	20 95       	com	r18
+ 1fc:	29 23       	and	r18, r25
+ 1fe:	28 bb       	out	0x18, r18	; 24
+		
+		uint8_t ser=200-15;
+		
+		for(uint8_t i=0;i<15;i++){
+ 200:	90 e0       	ldi	r25, 0x00	; 0
+ 202:	9f 30       	cpi	r25, 0x0F	; 15
+ 204:	40 f4       	brcc	.+16     	; 0x216 <_Z10servoangleh+0xb6>
+ 206:	e7 ec       	ldi	r30, 0xC7	; 199
+ 208:	f0 e0       	ldi	r31, 0x00	; 0
+ 20a:	31 97       	sbiw	r30, 0x01	; 1
+ 20c:	f1 f7       	brne	.-4      	; 0x20a <_Z10servoangleh+0xaa>
+ 20e:	00 c0       	rjmp	.+0      	; 0x210 <_Z10servoangleh+0xb0>
+ 210:	00 00       	nop
+ 212:	9f 5f       	subi	r25, 0xFF	; 255
+ 214:	f6 cf       	rjmp	.-20     	; 0x202 <_Z10servoangleh+0xa2>
+		for(uint8_t i=0;i<ser;i++){
+			_delay_us(100);
+		}
+	}
+	_delay_ms(500);
+	for(uint8_t j=0;j<100;j++){
+ 216:	4f 5f       	subi	r20, 0xFF	; 255
+ 218:	d7 cf       	rjmp	.-82     	; 0x1c8 <_Z10servoangleh+0x68>
+ 21a:	08 95       	ret
+
+0000021c <main>:
+	
+}
+
+int main(void)
+{
+    DDRD|=0xF0;
+ 21c:	81 b3       	in	r24, 0x11	; 17
+ 21e:	80 6f       	ori	r24, 0xF0	; 240
+ 220:	81 bb       	out	0x11, r24	; 17
+	DDRB=0xFF;
+ 222:	8f ef       	ldi	r24, 0xFF	; 255
+ 224:	87 bb       	out	0x17, r24	; 23
+	servoangle(0);
+ 226:	80 e0       	ldi	r24, 0x00	; 0
+ 228:	0e 94 b0 00 	call	0x160	; 0x160 <_Z10servoangleh>
+	stepper(5,1);
+ 22c:	61 e0       	ldi	r22, 0x01	; 1
+ 22e:	85 e0       	ldi	r24, 0x05	; 5
+ 230:	90 e0       	ldi	r25, 0x00	; 0
+ 232:	0e 94 36 00 	call	0x6c	; 0x6c <_Z7stepperjb>
+ 236:	ff cf       	rjmp	.-2      	; 0x236 <main+0x1a>
+
+00000238 <_exit>:
+ 238:	f8 94       	cli
+
+0000023a <__stop_program>:
+ 23a:	ff cf       	rjmp	.-2      	; 0x23a <__stop_program>

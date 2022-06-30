@@ -1,0 +1,28 @@
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(8,9);  //tx,rx of module
+
+
+void setup() 
+{
+  Serial.begin(115200);
+  mySerial.begin(115200);
+ mySerial.println("AT");
+ delay(50);
+ updateSerial(); 
+}
+
+void loop() {
+
+
+  
+}
+
+void updateSerial(){
+  delay(500);
+ while(mySerial.available()) {
+    Serial.write(mySerial.read());
+  }
+  while (Serial.available()) {
+    mySerial.write(Serial.read());
+  } 
+}
